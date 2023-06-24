@@ -1,40 +1,51 @@
-import { useState } from 'react'
-import useSWR from 'swr';
+import { useState } from "react";
+import useSWR from "swr";
 
-import { Button, NextImage as Image } from 'components/UI';
+import { Button, PhotoSkeleton, Select } from "components/UI";
 
-import { httpGet } from 'http/services/httpGet';
+import { httpGet } from "http/services/httpGet";
 
-import { ROVER_PHOTOS } from 'consts/endpoints';
-import { CURIOSITY } from 'consts/rovers';
+import { ROVER_PHOTOS } from "consts/endpoints";
+import { CURIOSITY, ROVERS_SPECS } from "consts/rovers";
 
 import styles from "styles/screenStyles/Home.module.scss";
+import { RoverPhotosGrid } from "components/RoverPhotosGrid";
+import { Filters, Paginator } from "@components/*";
 
 export const PhotosHome = () => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
     const [pageIndex, setPageIndex] = useState(0);
+    const [roverSelected, setRoverSelected] = useState("");
 
-    const OPTIONS = `sol=1000&page=${pageIndex}`
+    const OPTIONS = `sol=1000&page=${pageIndex}`;
 
-    const fetcher = ([BASE_URL, ENDPOINT, OPTIONS]) => httpGet(BASE_URL, ENDPOINT, OPTIONS);
+    const fetcher = ([BASE_URL, ENDPOINT, OPTIONS]) =>
+        httpGet(BASE_URL, ENDPOINT, OPTIONS);
 
-    const { data, isLoading, error } = useSWR([BASE_URL, `${ROVER_PHOTOS.replace('$rover_name', CURIOSITY)}/photos`, OPTIONS], fetcher);
+    // swr for pagination caching
+    const { data, isLoading } = useSWR(
+        [
+            BASE_URL,
+            `${ROVER_PHOTOS.replace("$rover_name", roverSelected)}`,
+            OPTIONS,
+        ],
+        fetcher
+    );
 
     return (
-        <div className={styles.container}>
-            {
-                isLoading ? 'Loading...'
-                    :
-                    data.photos.map(({ img_src }, index) => (
-                        <Image alt='rover photo' key={index} img_src={img_src} height={200} width={200} />
-                    ))
-            }
+        <section className={styles.container}>
+            <Paginator pageIndex={pageIndex} setPageIndex={setPageIndex} />
 
-            <div className={styles.buttonContainer}>
-                <Button onClick={() => setPageIndex(pageIndex - 1)}>Previous</Button>
-                <Button onClick={() => setPageIndex(pageIndex + 1)}>Next</Button>
-            </div>
-        </div>
-    )
-}
+            <Filters handleSelected={setRoverSelected} />
+
+            {isLoading || !data ? (
+                <PhotoSkeleton />
+            ) : (
+                <RoverPhotosGrid data={data} />
+            )}
+
+            <Paginator pageIndex={pageIndex} setPageIndex={setPageIndex} />
+        </section>
+    );
+};

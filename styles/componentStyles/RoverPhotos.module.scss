@@ -1,0 +1,14 @@
+@import "../sass-utils/index";
+
+.rover_photos {
+    display: grid;
+    gap: 2em;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    width: 75%;
+
+    .photo {
+        @include boxShadow2;
+        border-radius: 10px;
+    }
+}

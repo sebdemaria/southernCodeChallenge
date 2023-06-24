@@ -1,25 +1,28 @@
 {
-  "name": "souther-code-challenge",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "axios": "^1.4.0",
-    "eslint": "8.43.0",
-    "eslint-config-next": "13.4.7",
-    "next": "13.4.7",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "sass": "^1.63.6",
-    "sharp": "^0.32.1",
-    "swr": "^2.2.0"
-  },
-  "devDependencies": {
-    "prettier": "^2.8.8"
-  }
+    "name": "souther-code-challenge",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "prettier": "prettier --write ."
+    },
+    "dependencies": {
+        "axios": "^1.4.0",
+        "eslint": "8.43.0",
+        "eslint-config-next": "13.4.7",
+        "next": "13.4.7",
+        "react": "18.2.0",
+        "react-content-loader": "^6.2.1",
+        "react-dom": "18.2.0",
+        "sass": "^1.63.6",
+        "sharp": "^0.32.1",
+        "swr": "^2.2.0"
+    },
+    "devDependencies": {
+        "eslint-plugin-jest": "^27.2.2",
+        "prettier": "^2.8.8"
+    }
 }

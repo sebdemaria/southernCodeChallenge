@@ -11,6 +11,8 @@ import { useMemo } from "react";
 export const getServerSideProps = async () => {
     const rover_manifests = await getManifests();
 
+    console.log(rover_manifests);
+
     return {
         props: {
             rover_manifests: JSON.stringify(rover_manifests),

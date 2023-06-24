@@ -1,0 +1,40 @@
+@import "../sass-utils/index";
+
+.header {
+    @include boxShadow;
+    @include flexJustifyCenterAlignWrap;
+
+    background-color: $darkGray;
+    padding: 0.5em 0;
+    position: fixed;
+    transition: 0.5s all ease-in-out;
+    width: 100%;
+
+    .headerLogo {
+        height: auto;
+        transition: 0.5s all ease-in-out;
+    }
+}
+
+.headerAnimateIn {
+    .headerLogo {
+        width: 100px;
+    }
+}
+
+.headerAnimateOut {
+    background-color: $lightgrayTransparent;
+
+    .headerLogo {
+        opacity: 0.7;
+        width: 50px;
+    }
+}
+
+@media (max-width: $md) {
+    .header {
+        .headerLogo {
+            max-width: 80px;
+        }
+    }
+}

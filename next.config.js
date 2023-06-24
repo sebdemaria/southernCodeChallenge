@@ -7,6 +7,10 @@ const nextConfig = {
                 protocol: "http",
                 hostname: "mars.jpl.nasa.gov",
             },
+            {
+                protocol: "http",
+                hostname: "mars.nasa.gov",
+            },
         ],
     },
 };

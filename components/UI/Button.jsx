@@ -1,10 +1,23 @@
 import PropTypes from "prop-types";
 
-export const Button = ({ handleClick, children, disabled = false, type = 'button', ...props }) => {
+export const Button = ({
+    handleClick,
+    children,
+    disabled = false,
+    type = "button",
+    ...props
+}) => {
     return (
-        <button type={type} disabled={disabled} onClick={handleClick} {...props}>{children}</button>
-    )
-}
+        <button
+            type={type}
+            disabled={disabled}
+            onClick={handleClick}
+            {...props}
+        >
+            {children}
+        </button>
+    );
+};
 
 Button.propTypes = {
     handleClick: PropTypes.func,

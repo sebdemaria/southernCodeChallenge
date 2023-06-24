@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export const Select = ({ handleSelected, children }) => {
+export const Select = ({ handleSelected, children, disabled = false }) => {
     return (
-        <select onChange={(e) => handleSelected(e.target.value)}>
+        <select disabled={disabled} onChange={(e) => handleSelected(e.target.value)}>
             {children}
         </select>
     );
@@ -11,4 +11,5 @@ export const Select = ({ handleSelected, children }) => {
 Select.propTypes = {
     handleSelected: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
+    disabled: PropTypes.bool,
 };

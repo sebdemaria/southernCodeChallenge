@@ -12,8 +12,10 @@ export const PhotoSkeleton = (props) => (
                 width={200}
                 height={200}
                 viewBox="0 0 500 500"
-                backgroundColor="#f3f3f3"
-                foregroundColor="#ecebeb"
+                backgroundColor="#fff"
+                style={{ borderRadius: '10px' }}
+                opacity={0.3}
+                foregroundColor="#b2b1b9"
                 {...props}
             >
                 <rect width="500" height="500" />

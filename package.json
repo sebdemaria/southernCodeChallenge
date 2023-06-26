@@ -13,13 +13,16 @@
         "axios": "^1.4.0",
         "eslint": "8.43.0",
         "eslint-config-next": "13.4.7",
+        "formik": "^2.4.2",
+        "moment": "^2.29.4",
         "next": "13.4.7",
         "react": "18.2.0",
         "react-content-loader": "^6.2.1",
         "react-dom": "18.2.0",
         "sass": "^1.63.6",
         "sharp": "^0.32.1",
-        "swr": "^2.2.0"
+        "swr": "^2.2.0",
+        "yup": "^1.2.0"
     },
     "devDependencies": {
         "eslint-plugin-jest": "^27.2.2",

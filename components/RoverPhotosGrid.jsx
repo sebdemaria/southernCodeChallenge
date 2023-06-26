@@ -12,6 +12,7 @@ export const RoverPhotosGrid = ({ data }) => {
                     key={index}
                     img_src={img_src}
                     height={200}
+                    priority
                     width={200}
                 />
             ))}

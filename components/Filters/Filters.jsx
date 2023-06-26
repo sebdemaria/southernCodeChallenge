@@ -1,61 +1,187 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "hooks";
+import { useFilters } from "../../hooks/useFilters";
+import moment from "moment";
 
-import { Select } from "components/UI";
+import { Form, Formik } from "formik";
+import { FiltersValidationSchema } from "./FiltersValidationSchema";
+
+import { Select, Button, Input } from "components/UI";
 
 import { ROVERS_SPECS } from "consts/rovers";
 
 import styles from "styles/componentStyles/Filters.module.scss";
 
-export const Filters = ({ setFilters, roverSelected, setRoverSelected }) => {
+export const Filters = ({
+    setFilters,
+    roverSelected,
+    setRoverSelected,
+    setPageIndex,
+}) => {
     const { rover_manifests } = useAppContext();
+    const { setQueryParams } = useFilters(setFilters);
 
-    const [cameraSelected, setCameraSelected] = useState("");
+    const [filterBy, setFilterBy] = useState("");
 
-    const maxEarthDateAvailable = JSON.parse(rover_manifests).filter(rover => rover.rover.toLowerCase() === roverSelected)[0]?.max_date;
+    const maxEarthDateAvailable =
+        moment(
+            JSON.parse(rover_manifests).filter(
+                (rover) => rover?.rover?.toLowerCase() === roverSelected
+            )[0]?.max_date
+        ).format("YYYY-MM-DD") || null;
 
-    const maxSolAvailable = JSON.parse(rover_manifests).filter(rover => rover.rover.toLowerCase() === roverSelected)[0]?.max_sol;
+    const maxSolAvailable =
+        JSON.parse(rover_manifests).filter(
+            (rover) => rover?.rover?.toLowerCase() === roverSelected
+        )[0]?.max_sol || "";
 
-    useEffect(() => {    
-            // ! hay que terminar el handleo de los filtros, seria mejor usar un custom hook 
-            // ! para handlear el onchange de cada filtro y setear el setfilters
-        const options = 'sol='
-    }, [maxEarthDateAvailable, maxSolAvailable, cameraSelected])
-
+    const validationSchema = FiltersValidationSchema(
+        maxSolAvailable,
+        filterBy,
+        roverSelected
+    );
 
     return (
-        <div className={styles.filterContainer}>
-            {/* set max date to oldest date available for each rover mission according to manifest */}
-            <input type="date" id="earth_date" max={maxEarthDateAvailable} value={maxEarthDateAvailable} />
-
-            <input type="number" id="earth_date" placeholder={roverSelected && `Max sol available ${maxSolAvailable}`} value={maxSolAvailable} />
-
-            <Select handleSelected={setRoverSelected}>
-                <option value={""}>Select a rover</option>
-                {Object.values(ROVERS_SPECS).map(({ rover_name }, index) => (
-                    <option
-                        key={index}
-                        value={rover_name}
-                    >
-                        {rover_name}
-                    </option>
-                ))}
-            </Select>
-
-            <Select disabled={!roverSelected ? true : false} handleSelected={setCameraSelected}>
-                <option value={""}>Select a camera</option>
-
-                {roverSelected &&
-                    ROVERS_SPECS[roverSelected.toUpperCase()].cameras.map((value, index) => (
-                        <option
-                            key={index}
-                            value={value}
-                        >
-                            {value}
-                        </option>
-                    ))
+        <Formik
+            initialValues={{
+                earth_date: maxEarthDateAvailable,
+                sol: "",
+                camera: "",
+            }}
+            validationSchema={validationSchema}
+            onSubmit={async (values, { setSubmitting }) => {
+                try {
+                    // setExecuteSubmit(true);
+                    console.log("submit");
+                    setPageIndex(1);
+                    setQueryParams(values);
+                } catch (error) {
+                    throw new Error(error.message);
+                } finally {
+                    setSubmitting(false);
                 }
-            </Select>
-        </div>
+            }}
+        >
+            {({ resetForm, setFieldValue }) => (
+                <Form noValidate className={styles.filterContainer}>
+                    <Select
+                        label="Rover"
+                        onChange={(e) => {
+                            setRoverSelected(e.target.value),
+                                resetForm(),
+                                setFilters();
+                        }}
+                    >
+                        <option value={""}>Select a rover</option>
+
+                        {Object.values(ROVERS_SPECS).map(
+                            ({ rover_name }, index) => (
+                                <option key={index} value={rover_name}>
+                                    {rover_name}
+                                </option>
+                            )
+                        )}
+                    </Select>
+
+                    <div className={styles.filterBy}>
+                        <label className={styles.radioTitle}>Filter by</label>
+
+                        <span className={styles.radioContainer}>
+                            <label
+                                htmlFor="earth"
+                                className={styles.radioLabel}
+                            >
+                                <input
+                                    id="earth"
+                                    label="Earth Date"
+                                    name="filterBy"
+                                    type="radio"
+                                    value="earth_date"
+                                    onChange={(e) => {
+                                        setFilterBy(e.target.value),
+                                            setFieldValue("sol", "");
+                                    }}
+                                />
+                                Earth Date
+                            </label>
+
+                            <label htmlFor="sol" className={styles.radioLabel}>
+                                <input
+                                    id="sol"
+                                    label="Sol"
+                                    name="filterBy"
+                                    type="radio"
+                                    value="sol"
+                                    onChange={(e) => {
+                                        setFilterBy(e.target.value),
+                                            setFieldValue("earth_date", "");
+                                    }}
+                                />
+                                Sol
+                            </label>
+                        </span>
+                    </div>
+
+                    {/* set max date to oldest date available for each rover mission according to manifest */}
+                    <Input
+                        defaultValue={maxEarthDateAvailable}
+                        disabled={
+                            !roverSelected || filterBy !== "earth_date"
+                                ? true
+                                : false
+                        }
+                        id="earth_date"
+                        label={"Earth Date"}
+                        helperText={
+                            roverSelected &&
+                            maxEarthDateAvailable &&
+                            `Max Earth Day available ${maxEarthDateAvailable}`
+                        }
+                        max={maxEarthDateAvailable}
+                        name="earth_date"
+                        type="date"
+                    />
+
+                    <Input
+                        disabled={
+                            !roverSelected || filterBy !== "sol" ? true : false
+                        }
+                        id="sol"
+                        label="Sol"
+                        max={maxSolAvailable}
+                        name="sol"
+                        placeholder={
+                            roverSelected &&
+                            maxSolAvailable &&
+                            `Max sol available ${maxSolAvailable}`
+                        }
+                        type="tel"
+                    />
+
+                    <Select
+                        label="Camera"
+                        disabled={
+                            !maxEarthDateAvailable || !maxSolAvailable
+                                ? true
+                                : false
+                        }
+                        name="camera"
+                    >
+                        <option value={""}>All</option>
+
+                        {roverSelected &&
+                            ROVERS_SPECS[
+                                roverSelected.toUpperCase()
+                            ].cameras.map((value, index) => (
+                                <option key={index} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                    </Select>
+
+                    <Button type="submit">Search</Button>
+                </Form>
+            )}
+        </Formik>
     );
 };

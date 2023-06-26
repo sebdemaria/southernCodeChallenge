@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import styles from "styles/UIStyles/Button.module.scss";
+
 export const Button = ({
     handleClick,
     children,
@@ -9,9 +11,10 @@ export const Button = ({
 }) => {
     return (
         <button
-            type={type}
+            className={styles.button}
             disabled={disabled}
             onClick={handleClick}
+            type={type}
             {...props}
         >
             {children}

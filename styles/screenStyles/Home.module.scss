@@ -1,7 +1,19 @@
 .container {
+    align-items: baseline;
     display: flex;
     flex-wrap: wrap;
-    gap: 1em;
+    gap: 2em;
+    height: 100%;
     justify-content: center;
     width: 100%;
+
+    .photoContainer {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+        margin-top: 1.5em;
+        justify-content: center;
+        width: 100%;
+    }
 }

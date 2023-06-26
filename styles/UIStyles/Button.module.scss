@@ -1,0 +1,21 @@
+@import "../sass-utils/index";
+
+.button {
+    background-color: $transparent;
+    border: 1px solid $black;
+    border-radius: 10px;
+    cursor: pointer;
+    color: $black;
+    padding: 0.6em 1.5em;
+    transition: 0.1s all ease-in-out;
+
+    &:hover {
+        color: $white;
+        background-color: $darkGray;
+    }
+
+    &:disabled {
+        color: $black;
+        background-color: $transparent !important;
+    }
+}

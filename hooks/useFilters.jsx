@@ -1,7 +1,15 @@
 import { ROVER_PHOTOS } from "consts/endpoints";
+import { useLocalStorage } from "./useLocalStorage";
+import { useAppContext } from ".";
+import moment from "moment";
 
 export const useFilters = (setFilters) => {
     let filterValues = [];
+
+    const { myFavourites, setMyFavourites, filters, roverSelected } =
+        useAppContext();
+
+    const { getStorageItem, setStorageItem } = useLocalStorage();
 
     const setQueryParams = (roverSelected, values) => {
         for (const key in values) {
@@ -40,5 +48,20 @@ export const useFilters = (setFilters) => {
         }
     };
 
-    return { setQueryParams };
+    const addTofavourites = () => {
+        // error check
+        if (!filters) return;
+
+        myFavourites?.push({
+            favourite_name: `${roverSelected}-${moment().format("DD-MM-YYYY")}`,
+            queries: filters,
+        });
+
+        // timeout to give the ilusion of processing the file,
+        // localstorage is way too fast to use a loader
+        setStorageItem("my_favourites", myFavourites);
+        setMyFavourites(getStorageItem("my_favourites"));
+    };
+
+    return { setQueryParams, addTofavourites };
 };

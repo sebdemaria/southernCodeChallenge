@@ -9,13 +9,14 @@ export const PhotoSkeleton = (props) => (
     <div className={styles.skeletonContainer}>
         {Array(skeletons_amount).fill(
             <ContentLoader
-                width={200}
-                height={200}
-                viewBox="0 0 500 500"
+                key={Math.random()}
                 backgroundColor="#fff"
-                style={{ borderRadius: "10px" }}
-                opacity={0.3}
                 foregroundColor="#b2b1b9"
+                height={200}
+                opacity={0.3}
+                style={{ borderRadius: "10px" }}
+                viewBox="0 0 500 500"
+                width={200}
                 {...props}
             >
                 <rect width="500" height="500" />

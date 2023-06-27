@@ -1,15 +1,13 @@
 @import "../sass-utils/index";
 
 .inputContainer {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    @include flexJustifyCenterAlignWrap;
     position: relative;
     width: 15%;
 
     .label {
         font-size: 0.9rem;
+        font-weight: 800;
         width: 100%;
     }
 
@@ -32,6 +30,7 @@
 
     .helperText {
         bottom: -2em;
+        color: $darkGray;
         font-size: 0.8rem;
         position: absolute;
         width: 100%;
@@ -55,5 +54,53 @@
         position: absolute;
         text-align: center;
         width: 100%;
+    }
+}
+
+.favouritesSelect {
+    @include flexJustifyCenterAlignWrap;
+    position: absolute;
+    right: 15%;
+    top: 15.5em;
+    width: 200px;
+}
+
+@media (max-width: $xxl) {
+    .inputContainer {
+        .helperText {
+            bottom: -3.3em;
+        }
+    }
+}
+
+@media (max-width: $xxl) {
+    .inputContainer {
+        width: 13%;
+
+        .input::placeholder {
+            font-size: 0.9rem;
+        }
+    }
+
+    .favouritesSelect {
+        right: 13%;
+    }
+}
+
+@media (max-width: $lg) {
+    .inputContainer {
+        width: 70%;
+
+        .input::placeholder {
+            font-size: 1rem;
+        }
+
+        .helperText {
+            bottom: -2em;
+        }
+    }
+
+    .favouritesSelect {
+        position: initial;
     }
 }

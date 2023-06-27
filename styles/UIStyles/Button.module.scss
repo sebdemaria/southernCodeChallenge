@@ -15,7 +15,37 @@
     }
 
     &:disabled {
-        color: $black;
-        background-color: $transparent !important;
+        color: $lightgrayTransparent;
+        border-color: $gray;
+        background-color: $lightgrayTransparent !important;
+    }
+}
+
+.paginatorBtn {
+    width: initial !important;
+}
+
+.favouriteBtn {
+    background-color: $whiteTransparent;
+    border-radius: 50px;
+    border-color: $white;
+    padding: 0.6em 0.8em;
+    transition: 0.1s ease-in-out;
+    width: min-content !important;
+
+    &:hover {
+        @include boxShadowInset($white);
+        background-color: rgba(255, 217, 0, 0.501);
+    }
+}
+
+@media (max-width: $lg) {
+    .button {
+        max-width: 30%;
+        width: 60%;
+    }
+
+    .favouriteBtn {
+        margin-left: -6em;
     }
 }

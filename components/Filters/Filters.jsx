@@ -1,6 +1,4 @@
-import PropTypes from "prop-types";
-
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppContext, useFilters } from "hooks";
 import moment from "moment";
 
@@ -13,16 +11,22 @@ import { ROVERS_SPECS } from "consts/rovers";
 
 import styles from "styles/componentStyles/Filters.module.scss";
 
-export const Filters = ({
-    setFilters,
-    roverSelected,
-    setRoverSelected,
-    setPageIndex,
-}) => {
-    const { rover_manifests } = useAppContext();
-    const { setQueryParams } = useFilters(setFilters);
+export const Filters = () => {
+    const {
+        rover_manifests,
+        setFilters,
+        roverSelected,
+        setRoverSelected,
+        setPageIndex,
+        myFavourites,
+    } = useAppContext();
 
-    const [filterBy, setFilterBy] = useState("");
+    const { setQueryParams, addTofavourites } = useFilters(setFilters);
+
+    const favRef = useRef();
+
+    const [filterBy, setFilterBy] = useState("earth_date");
+    const [wasSaved, setWasSaved] = useState(false);
 
     const maxEarthDateAvailable =
         moment(
@@ -36,16 +40,19 @@ export const Filters = ({
             (rover) => rover?.rover?.toLowerCase() === roverSelected
         )[0]?.max_sol || "";
 
-    const validationSchema = FiltersValidationSchema(
-        maxSolAvailable,
-        filterBy,
-        roverSelected
-    );
+    const validationSchema = FiltersValidationSchema();
+
+    useEffect(() => {
+        wasSaved &&
+            setTimeout(() => {
+                setWasSaved(false);
+            }, 3000);
+    }, [wasSaved]);
 
     return (
         <Formik
             initialValues={{
-                earth_date: maxEarthDateAvailable,
+                earth_date: moment().format("YYYY-MM-DD"),
                 sol: "",
                 camera: "",
             }}
@@ -54,6 +61,7 @@ export const Filters = ({
                 try {
                     setPageIndex(1);
                     setQueryParams(roverSelected, values);
+                    console.log(favRef.current.value);
                 } catch (error) {
                     throw new Error(error.message);
                 } finally {
@@ -90,9 +98,9 @@ export const Filters = ({
                                 className={styles.radioLabel}
                             >
                                 <input
+                                    checked={filterBy === "earth_date" || false}
                                     id="earth"
                                     label="Earth Date"
-                                    // checked={true}
                                     name="filterBy"
                                     type="radio"
                                     value="earth_date"
@@ -123,7 +131,6 @@ export const Filters = ({
 
                     {/* set max date to oldest date available for each rover mission according to manifest */}
                     <Input
-                        defaultValue={maxEarthDateAvailable}
                         disabled={
                             !roverSelected || filterBy !== "earth_date"
                                 ? true
@@ -160,7 +167,9 @@ export const Filters = ({
                     <Select
                         label="Camera"
                         disabled={
-                            !maxEarthDateAvailable || !maxSolAvailable
+                            !maxEarthDateAvailable ||
+                            !maxSolAvailable ||
+                            !roverSelected
                                 ? true
                                 : false
                         }
@@ -178,17 +187,49 @@ export const Filters = ({
                             ))}
                     </Select>
 
-                    <Button type="submit">Search</Button>
+                    <span className={styles.btnsDiv}>
+                        <Button type="submit">Search</Button>
+                        <Button
+                            type="submit"
+                            customClass={"favouriteBtn"}
+                            handleClick={() => {
+                                addTofavourites(), setWasSaved(true);
+                            }}
+                        >
+                            ⭐️
+                        </Button>
+                    </span>
+
+                    <span className={styles.favouritesDiv}>
+                        <Select
+                            customClass={"favouritesSelect"}
+                            disabled={!myFavourites.length}
+                            label="Favs ⭐️"
+                            name="favs"
+                            ref={favRef}
+                            onChange={(e) => {
+                                setFilters(e.target.value),
+                                    setPageIndex(1),
+                                    resetForm();
+                            }}
+                        >
+                            <option value={""}>Your favourites</option>
+
+                            {myFavourites.map(
+                                ({ favourite_name, queries }, index) => (
+                                    <option key={index} value={queries}>
+                                        {favourite_name}
+                                    </option>
+                                )
+                            )}
+                        </Select>
+
+                        {wasSaved && (
+                            <p className={styles.savedMsg}>Saved succesfully</p>
+                        )}
+                    </span>
                 </Form>
             )}
         </Formik>
     );
-};
-
-Filters.propTypes = {
-    setFilters: PropTypes.func.isRequired,
-    roverSelected: PropTypes.string.isRequired,
-    setRoverSelected: PropTypes.func.isRequired,
-    setPageIndex: PropTypes.func.isRequired,
-    setExecuteSubmit: PropTypes.func.isRequired,
 };

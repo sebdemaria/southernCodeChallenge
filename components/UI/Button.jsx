@@ -7,13 +7,15 @@ export const Button = ({
     children,
     disabled = false,
     type = "button",
+    customClass,
     ...props
 }) => {
     return (
         <button
-            className={styles.button}
+            className={`${styles.button} ${styles[customClass]}`}
             disabled={disabled}
             onClick={handleClick}
+            role="button"
             type={type}
             {...props}
         >

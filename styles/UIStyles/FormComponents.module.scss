@@ -1,0 +1,59 @@
+@import "../sass-utils/index";
+
+.inputContainer {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    width: 15%;
+
+    .label {
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .input {
+        background-color: $transparent;
+        border: none;
+        border-bottom: 1px solid $black;
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        padding: 0.2em 0.5em;
+        width: 100%;
+
+        &:disabled {
+            background-color: $lightgray;
+            border-bottom: 1px solid $lightgrayTransparent;
+            cursor: not-allowed;
+        }
+    }
+
+    .helperText {
+        bottom: -2em;
+        font-size: 0.8rem;
+        position: absolute;
+        width: 100%;
+    }
+
+    .select {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        padding: 0.2em 0.5em;
+        width: 100%;
+    }
+
+    .errorMsg {
+        bottom: -2em;
+        color: $red;
+        font-size: 0.8rem;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+}

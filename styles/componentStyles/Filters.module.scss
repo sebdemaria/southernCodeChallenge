@@ -1,6 +1,39 @@
+@import "../sass-utils/index";
+
 .filterContainer {
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 100%;
+
+    .filterBy {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        justify-content: start;
+        width: max-content;
+
+        .radioTitle {
+            width: 100%;
+        }
+
+        .radioContainer {
+            display: flex;
+            justify-content: space-between;
+            width: 95%;
+
+            .radioLabel {
+                cursor: pointer;
+                font-size: 1rem;
+                // margin-right: 1em;
+                width: max-content;
+
+                input {
+                    cursor: pointer;
+                    margin-right: 0.5em;
+                }
+            }
+        }
+    }
 }

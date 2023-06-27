@@ -1,51 +1,81 @@
 import { useState } from "react";
 import useSWR from "swr";
 
-import { Button, PhotoSkeleton, Select } from "components/UI";
+import { RoverPhotosGrid } from "components/RoverPhotosGrid";
+import { PhotoSkeleton } from "components/UI";
+import { Filters, Paginator } from "@components/*";
 
 import { httpGet } from "http/services/httpGet";
 
-import { ROVER_PHOTOS } from "consts/endpoints";
-import { CURIOSITY, ROVERS_SPECS } from "consts/rovers";
+import { CURIOSITY } from "../consts/rovers";
 
 import styles from "styles/screenStyles/Home.module.scss";
-import { RoverPhotosGrid } from "components/RoverPhotosGrid";
-import { Filters, Paginator } from "@components/*";
+import { ROVER_PHOTOS } from "consts/endpoints";
+import moment from "moment";
 
 export const PhotosHome = () => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-    const [pageIndex, setPageIndex] = useState(0);
-    const [roverSelected, setRoverSelected] = useState("");
+    const [pageIndex, setPageIndex] = useState(1);
+    const [roverSelected, setRoverSelected] = useState(CURIOSITY);
+    const [filters, setFilters] = useState(
+        `${ROVER_PHOTOS.replace(
+            "$rover_name",
+            roverSelected
+        )}?earth_date=${moment().format("YYYY-MM-DD")}`
+    );
 
-    const OPTIONS = `sol=1000&page=${pageIndex}`;
-
-    const fetcher = ([BASE_URL, ENDPOINT, OPTIONS]) =>
-        httpGet(BASE_URL, ENDPOINT, OPTIONS);
+    const fetcher = ([BASE_URL, OPTIONS]) => httpGet(BASE_URL, null, OPTIONS);
 
     // swr for pagination caching
     const { data, isLoading } = useSWR(
-        [
-            BASE_URL,
-            `${ROVER_PHOTOS.replace("$rover_name", roverSelected)}`,
-            OPTIONS,
-        ],
+        [BASE_URL, `${filters}&page=${pageIndex}`],
         fetcher
     );
 
     return (
         <section className={styles.container}>
-            <Paginator pageIndex={pageIndex} setPageIndex={setPageIndex} />
+            <Filters
+                setRoverSelected={setRoverSelected}
+                roverSelected={roverSelected}
+                setFilters={setFilters}
+                setPageIndex={setPageIndex}
+            />
 
-            <Filters handleSelected={setRoverSelected} />
+            <div className={styles.photoContainer}>
+                <Paginator
+                    data={data}
+                    disabled={isLoading}
+                    pageIndex={pageIndex}
+                    setPageIndex={setPageIndex}
+                />
 
-            {isLoading || !data ? (
-                <PhotoSkeleton />
-            ) : (
-                <RoverPhotosGrid data={data} />
-            )}
+                {isLoading && filters && <PhotoSkeleton />}
 
-            <Paginator pageIndex={pageIndex} setPageIndex={setPageIndex} />
+                {data?.photos?.length ? (
+                    <RoverPhotosGrid data={data} />
+                ) : (
+                    <h1>
+                        We couldn&apos;t find any images for those filters :(
+                    </h1>
+                )}
+
+                {!data && <h1>Use the filters above to search for images!</h1>}
+
+                {data?.data?.error && (
+                    <h1>
+                        There was an error while trying to fetch the images.
+                        Please try again.
+                    </h1>
+                )}
+            </div>
+
+            <Paginator
+                data={data}
+                disabled={isLoading}
+                pageIndex={pageIndex}
+                setPageIndex={setPageIndex}
+            />
         </section>
     );
 };

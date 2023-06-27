@@ -2,7 +2,8 @@
 
 .main {
     background-color: $lightgray;
-    height: 200vh;
+    height: 100%;
+    min-height: 100vh;
     padding: 8em 4em;
     width: 100vw;
 }

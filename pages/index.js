@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Head from "next/head";
 
 import { getManifests } from "utils/getManifests";
@@ -6,12 +7,9 @@ import AppProvider from "hooks/useAppContext";
 import { PhotosHome } from "screens/PhotosHome";
 
 import { Layout } from "templates/base/Layout";
-import { useMemo } from "react";
 
 export const getServerSideProps = async () => {
     const rover_manifests = await getManifests();
-
-    console.log(rover_manifests);
 
     return {
         props: {

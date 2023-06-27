@@ -40,16 +40,6 @@
         justify-content: center;
         width: min-content;
     }
-
-    .savedMsg {
-        @include boxShadowInset($green);
-        border: 1px solid $green;
-        border-radius: 50px;
-        color: $green;
-        font-size: 0.8rem;
-        padding: 1em;
-        text-align: center;
-    }
 }
 
 @media (max-width: $lg) {

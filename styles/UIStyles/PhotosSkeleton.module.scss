@@ -1,0 +1,33 @@
+@import "../sass-utils/index";
+
+.skeletonContainer {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    width: 75%;
+}
+
+@media (max-width: $xxl) {
+    .skeletonContainer {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: $lg) {
+    .skeletonContainer {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: $md) {
+    .skeletonContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: $sm) {
+    .skeletonContainer {
+        grid-template-columns: 1fr;
+    }
+}

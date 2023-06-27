@@ -1,0 +1,16 @@
+@import "../sass-utils/index";
+
+.main {
+    background-color: $lightgray;
+    height: 100%;
+    min-height: 100vh;
+    padding: 8em 4em;
+    width: 100vw;
+}
+
+@media (max-width: $xl) {
+    .main {
+        margin: 0;
+        padding: 8em 0;
+    }
+}

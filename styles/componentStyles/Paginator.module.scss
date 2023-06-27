@@ -1,0 +1,14 @@
+@import "../sass-utils/index";
+
+.buttonContainer {
+    align-items: center;
+    color: $black;
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    width: 100%;
+
+    p {
+        font-weight: 900;
+    }
+}

@@ -1,0 +1,43 @@
+@import "../sass-utils/index";
+
+.rover_photos {
+    display: grid;
+    gap: 2em;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    min-height: 450px;
+    width: 75%;
+
+    .photo {
+        @include boxShadow2;
+        border-radius: 10px;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: $xxl) {
+    .rover_photos {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: $lg) {
+    .rover_photos {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: $md) {
+    .rover_photos {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: $sm) {
+    .rover_photos {
+        grid-template-columns: 1fr;
+    }
+}

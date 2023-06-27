@@ -8,16 +8,17 @@ $xl: "80em";
 $xxl: "96em";
 
 // colors
+$green: rgb(19, 143, 19);
 $gray: gray;
 $red: red;
-$lightgray: lightgray;
+$lightgray: #b7b7b7;
+$yellow: #ffd523;
 $lightgrayTransparent: rgba(101, 101, 101, 0.672);
+$bluishGray: #595260;
+$darkGray: rgba(52, 52, 52, 0.813);
+$darkBlue: #2c2e43;
 $transparent: transparent;
 $white: #fff;
-$green: #7bd588;
-$lowPrioBlue: rgba(58, 153, 225);
-$midPrioYellow: rgb(255, 187, 0);
-$highPrioRed: rgb(253, 76, 12);
-$lowPrioBlueTransparent: rgba(58, 153, 225, 0.174);
-$midPrioYellowTransparent: rgba(255, 187, 0, 0.174);
-$highPrioRedTransparent: rgba(253, 76, 12, 0.174);
+$whiteTransparent: rgba(255, 255, 255, 0.599);
+$greenTransparent: rgba(113, 255, 57, 0.673);
+$black: #000000;

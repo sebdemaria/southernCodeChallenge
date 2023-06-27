@@ -26,16 +26,43 @@
 }
 
 .favouriteBtn {
+    align-items: center;
     background-color: $whiteTransparent;
     border-radius: 50px;
     border-color: $white;
+    display: flex;
+    justify-content: center;
+    height: auto;
     padding: 0.6em 0.8em;
     transition: 0.1s ease-in-out;
-    width: min-content !important;
+    width: 45px !important;
+
+    img {
+        height: auto;
+        width: 15px;
+    }
 
     &:hover {
         @include boxShadowInset($white);
         background-color: rgba(255, 217, 0, 0.501);
+    }
+}
+
+.saved {
+    @include boxShadowInset($green);
+    align-items: center;
+    background-color: $greenTransparent;
+    border-color: $green;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 0.6em 0.8em;
+    transition: 0.1s ease-in-out;
+    width: 45px !important;
+
+    img {
+        height: auto;
+        width: 15px;
     }
 }
 
@@ -45,7 +72,8 @@
         width: 60%;
     }
 
-    .favouriteBtn {
+    .favouriteBtn,
+    .saved {
         margin-left: -6em;
     }
 }

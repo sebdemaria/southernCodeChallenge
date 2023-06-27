@@ -20,6 +20,6 @@ export const getManifests = async () => {
 
         rovers_manifests.push(manifest_formatted);
     }
-    console.log(rovers_manifests);
+
     return rovers_manifests;
 };

@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext, useFilters } from "hooks";
 import moment from "moment";
 
 import { Form, Formik } from "formik";
 import { FiltersValidationSchema } from "./FiltersValidationSchema";
 
-import { Select, Button, Input } from "components/UI";
+import { Select, Button, Input, NextImage } from "components/UI";
 
 import { ROVERS_SPECS } from "consts/rovers";
+
+import { CheckMark, Star } from "public/assets";
 
 import styles from "styles/componentStyles/Filters.module.scss";
 
@@ -22,8 +24,6 @@ export const Filters = () => {
     } = useAppContext();
 
     const { setQueryParams, addTofavourites } = useFilters(setFilters);
-
-    const favRef = useRef();
 
     const [filterBy, setFilterBy] = useState("earth_date");
     const [wasSaved, setWasSaved] = useState(false);
@@ -61,7 +61,6 @@ export const Filters = () => {
                 try {
                     setPageIndex(1);
                     setQueryParams(roverSelected, values);
-                    console.log(favRef.current.value);
                 } catch (error) {
                     throw new Error(error.message);
                 } finally {
@@ -191,12 +190,14 @@ export const Filters = () => {
                         <Button type="submit">Search</Button>
                         <Button
                             type="submit"
-                            customClass={"favouriteBtn"}
-                            handleClick={() => {
-                                addTofavourites(), setWasSaved(true);
-                            }}
+                            customClass={wasSaved ? "saved" : "favouriteBtn"}
+                            handleClick={() => addTofavourites(setWasSaved)}
                         >
-                            ⭐️
+                            {wasSaved ? (
+                                <NextImage alt="check mark" src={CheckMark} />
+                            ) : (
+                                <NextImage alt="check mark" src={Star} />
+                            )}
                         </Button>
                     </span>
 
@@ -206,7 +207,6 @@ export const Filters = () => {
                             disabled={!myFavourites.length}
                             label="Favs ⭐️"
                             name="favs"
-                            ref={favRef}
                             onChange={(e) => {
                                 setFilters(e.target.value),
                                     setPageIndex(1),
@@ -224,9 +224,9 @@ export const Filters = () => {
                             )}
                         </Select>
 
-                        {wasSaved && (
+                        {/* {wasSaved && (
                             <p className={styles.savedMsg}>Saved succesfully</p>
-                        )}
+                        )} */}
                     </span>
                 </Form>
             )}

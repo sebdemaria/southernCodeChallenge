@@ -48,7 +48,7 @@ export const useFilters = (setFilters) => {
         }
     };
 
-    const addTofavourites = () => {
+    const addTofavourites = (setWasSaved) => {
         // error check
         if (!filters) return;
 
@@ -61,6 +61,7 @@ export const useFilters = (setFilters) => {
         // localstorage is way too fast to use a loader
         setStorageItem("my_favourites", myFavourites);
         setMyFavourites(getStorageItem("my_favourites"));
+        setWasSaved(true);
     };
 
     return { setQueryParams, addTofavourites };

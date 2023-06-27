@@ -3,16 +3,14 @@
 .filterContainer {
     align-items: center;
     display: flex;
-    justify-content: space-evenly;
+    gap: 0.8em;
+    justify-content: center;
     width: 100%;
 
     .filterBy {
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
+        @include flexJustifyCenterAlignWrap;
         gap: 0.5em;
-        justify-content: start;
-        width: max-content;
+        width: 18%;
 
         .radioTitle {
             width: 100%;
@@ -21,12 +19,11 @@
         .radioContainer {
             display: flex;
             justify-content: space-between;
-            width: 95%;
+            width: 80%;
 
             .radioLabel {
                 cursor: pointer;
                 font-size: 1rem;
-                // margin-right: 1em;
                 width: max-content;
 
                 input {
@@ -34,6 +31,66 @@
                     margin-right: 0.5em;
                 }
             }
+        }
+    }
+
+    .btnsDiv {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        width: min-content;
+    }
+
+    .savedMsg {
+        @include boxShadowInset($green);
+        border: 1px solid $green;
+        border-radius: 50px;
+        color: $green;
+        font-size: 0.8rem;
+        padding: 1em;
+        text-align: center;
+    }
+}
+
+@media (max-width: $lg) {
+    .filterContainer {
+        flex-wrap: wrap;
+        gap: 2.5em;
+
+        .radioTitle {
+            text-align: center;
+        }
+
+        .filterBy {
+            justify-content: center;
+            min-width: 320px;
+        }
+
+        .btnsDiv {
+            gap: 8em;
+            width: 100%;
+        }
+
+        .favouritesDiv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            width: 80%;
+
+            .savedMsg {
+                text-align: center;
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media (max-width: $sm) {
+    .filterContainer {
+        .filterBy {
+            justify-content: center;
+            min-width: 60%;
         }
     }
 }

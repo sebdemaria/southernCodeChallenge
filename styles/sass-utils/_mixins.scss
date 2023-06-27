@@ -188,6 +188,12 @@
     box-shadow: -1px 10px 16px -3px rgba(0, 0, 0, 0.5);
 }
 
+@mixin boxShadowInset($color) {
+    -webkit-box-shadow: inset 0px 0px 15px 2px $color;
+    -moz-box-shadow: -inset 0px 0px 15px 2px $color;
+    box-shadow: inset 0px 0px 15px 2px $color;
+}
+
 @mixin flexJustifyCenterAlignWrap {
     align-items: center;
     display: flex;

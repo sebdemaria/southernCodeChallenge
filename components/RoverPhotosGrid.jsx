@@ -23,5 +23,5 @@ export const RoverPhotosGrid = ({ data }) => {
 };
 
 RoverPhotosGrid.propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
 };

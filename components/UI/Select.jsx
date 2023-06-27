@@ -8,6 +8,7 @@ export const Select = ({
     children,
     label,
     onChange,
+    customClass,
     name = "select",
     disabled = false,
     ...props
@@ -15,10 +16,11 @@ export const Select = ({
     const [field] = useField(name);
 
     return (
-        <div className={styles.inputContainer}>
+        <div className={`${styles.inputContainer} ${styles[customClass]}`}>
             <label className={styles.label}>{label}</label>
+
             <select
-                className={styles.select}
+                className={`${styles.select}`}
                 disabled={disabled}
                 name={name}
                 {...props}
@@ -26,6 +28,7 @@ export const Select = ({
             >
                 {children}
             </select>
+
             <ErrorMessage
                 className={styles.errorMsg}
                 component={"p"}
@@ -39,6 +42,7 @@ Select.propTypes = {
     children: PropTypes.node.isRequired,
     label: PropTypes.string,
     onChange: PropTypes.func,
+    customClass: PropTypes.string,
     name: PropTypes.string,
     disabled: PropTypes.bool,
     props: PropTypes.string,

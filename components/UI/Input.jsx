@@ -5,7 +5,6 @@ import { ErrorMessage, useField } from "formik";
 import styles from "styles/UIStyles/FormComponents.module.scss";
 
 export const Input = ({
-    defaultValue,
     helperText,
     onChange,
     disabled,
@@ -26,15 +25,14 @@ export const Input = ({
             </label>
             <input
                 className={styles.input}
-                defaultValue={defaultValue}
                 disabled={disabled}
                 id={id}
-                name={name}
                 max={max}
-                type={type}
-                {...props}
-                value={value ? value : field.value}
+                name={name}
                 onChange={onChange ? onChange : field.onChange}
+                type={type}
+                value={value || field.value}
+                {...props}
             />
             {meta.error ? (
                 <ErrorMessage

@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
+
 import { useState } from "react";
-import { useAppContext } from "hooks";
-import { useFilters } from "../../hooks/useFilters";
+import { useAppContext, useFilters } from "hooks";
 import moment from "moment";
 
 import { Form, Formik } from "formik";
@@ -51,10 +52,8 @@ export const Filters = ({
             validationSchema={validationSchema}
             onSubmit={async (values, { setSubmitting }) => {
                 try {
-                    // setExecuteSubmit(true);
-                    console.log("submit");
                     setPageIndex(1);
-                    setQueryParams(values);
+                    setQueryParams(roverSelected, values);
                 } catch (error) {
                     throw new Error(error.message);
                 } finally {
@@ -66,10 +65,9 @@ export const Filters = ({
                 <Form noValidate className={styles.filterContainer}>
                     <Select
                         label="Rover"
+                        defaultValue={roverSelected}
                         onChange={(e) => {
-                            setRoverSelected(e.target.value),
-                                resetForm(),
-                                setFilters();
+                            setRoverSelected(e.target.value), resetForm();
                         }}
                     >
                         <option value={""}>Select a rover</option>
@@ -94,6 +92,7 @@ export const Filters = ({
                                 <input
                                     id="earth"
                                     label="Earth Date"
+                                    // checked={true}
                                     name="filterBy"
                                     type="radio"
                                     value="earth_date"
@@ -184,4 +183,12 @@ export const Filters = ({
             )}
         </Formik>
     );
+};
+
+Filters.propTypes = {
+    setFilters: PropTypes.func.isRequired,
+    roverSelected: PropTypes.string.isRequired,
+    setRoverSelected: PropTypes.func.isRequired,
+    setPageIndex: PropTypes.func.isRequired,
+    setExecuteSubmit: PropTypes.func.isRequired,
 };

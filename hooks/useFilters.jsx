@@ -1,7 +1,9 @@
+import { ROVER_PHOTOS } from "consts/endpoints";
+
 export const useFilters = (setFilters) => {
     let filterValues = [];
 
-    const setQueryParams = (values) => {
+    const setQueryParams = (roverSelected, values) => {
         for (const key in values) {
             if (!values[key]) continue;
 
@@ -27,10 +29,14 @@ export const useFilters = (setFilters) => {
             } else {
                 filterValues.push(newQueryParam);
             }
-            console.log(filterValues);
 
             // unify all query params into one
-            setFilters(filterValues.join("").slice(1));
+            setFilters(
+                `${ROVER_PHOTOS.replace(
+                    "$rover_name",
+                    roverSelected
+                )}?${filterValues.join("").slice(1)}`
+            );
         }
     };
 

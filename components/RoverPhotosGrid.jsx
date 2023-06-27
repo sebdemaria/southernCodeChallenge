@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { NextImage as Image } from "components/UI";
 
 import styles from "styles/componentStyles/RoverPhotos.module.scss";
@@ -18,4 +20,8 @@ export const RoverPhotosGrid = ({ data }) => {
             ))}
         </div>
     );
+};
+
+RoverPhotosGrid.propTypes = {
+    data: PropTypes.array.isRequired,
 };

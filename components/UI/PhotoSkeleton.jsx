@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import ContentLoader from "react-content-loader";
 
 import styles from "styles/UIStyles/PhotosSkeleton.module.scss";
@@ -23,3 +23,7 @@ export const PhotoSkeleton = (props) => (
         )}
     </div>
 );
+
+PhotoSkeleton.propTypes = {
+    props: PropTypes.string,
+};

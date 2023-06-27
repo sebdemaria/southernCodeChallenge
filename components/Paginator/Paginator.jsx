@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { Button } from "components/UI";
 
 import styles from "styles/componentStyles/Paginator.module.scss";
@@ -8,7 +10,7 @@ export const Paginator = ({
     setPageIndex,
     disabled = false,
 }) => {
-    return data?.photos?.length && pageIndex > 0 ? (
+    return (
         <div className={styles.buttonContainer}>
             <Button
                 disabled={pageIndex === 1 || disabled ? true : false}
@@ -30,5 +32,12 @@ export const Paginator = ({
                 {">"}
             </Button>
         </div>
-    ) : null;
+    );
+};
+
+Paginator.propTypes = {
+    data: PropTypes.array.isRequired,
+    pageIndex: PropTypes.number.isRequired,
+    setPageIndex: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };

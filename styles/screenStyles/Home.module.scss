@@ -5,15 +5,18 @@
     gap: 2em;
     height: 100%;
     justify-content: center;
+    min-height: 70vh;
     width: 100%;
 
     .photoContainer {
-        align-items: center;
+        align-items: baseline;
         display: flex;
         flex-wrap: wrap;
         gap: 2em;
+        height: 100%;
         margin-top: 1.5em;
         justify-content: center;
+        min-height: 60vh;
         width: 100%;
     }
 }

@@ -8,7 +8,7 @@ export const FiltersValidationSchema = (
     maxSolAvailable,
     filterBy,
     roverSelected = CURIOSITY
-) =>
+) => {
     filterBy === "earth_date"
         ? Yup.object({
               // error submit validations
@@ -32,3 +32,4 @@ export const FiltersValidationSchema = (
                   FORM_ERROR_MESSAGES.invalidStatus
               ),
           });
+};
